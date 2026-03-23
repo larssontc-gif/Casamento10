@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presente dos Noivos</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9f6f2; color: #5a5a5a; text-align: center; padding: 20px; }
+        h1 { color: #d4a373; margin-bottom: 10px; }
+        p { margin-bottom: 30px; }
+        
+        /* Grade de Presentes */
+        .grid-presentes { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
+        
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { color: #d4a373; }
+        .preco { font-weight: bold; font-size: 1.2rem; display: block; margin: 10px 0; }
+        
+        button { background: #d4a373; color: white; border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; font-weight: bold; width: 100%; }
+        button:hover { background: #bc8a5f; }
+
+        /* Modal (Janela que abre) */
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; max-width: 400px; width: 90%; position: relative; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
+        input { width: 100%; padding: 10px; margin-top: 15px; border: 1px solid #ddd; border-radius: 5px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <h1>Mimos para os Noivos 🥂</h1>
+    <p>Escolha um presente para nos ajudar na nossa nova jornada!</p>
+
+    <div class="grid-presentes">
+        <div class="card">
+            <h3>☕ Café da Manhã</h3>
+            <span class="preco">R$ 50,00</span>
+            <button onclick="abrirPix('Churrasco dos Noivos', 'R$ 50,00', 'COLE_AQUI_O_CODIGO_PIX_DE_50')">Presentear</button>
+        </div>
+
+        <div class="card">
+            <h3>🍽️ Jantar Romântico</h3>
+            <span class="preco">R$ 150,00</span>
+            <button onclick="abrirPix('Jantar Romântico', 'R$ 150,00', 'COLE_AQUI_O_CODIGO_PIX_150')">Presentear</button>
+        </div>
+
+        <div class="card">
+            <h3>🏖️ Passeio de Barco</h3>
+            <span class="preco">R$ 300,00</span>
+            <button onclick="abrirPix('Passeio de Barco', 'R$ 300,00', 'COLE_AQUI_O_CODIGO_PIX_300')">Presentear</button>
+        </div>
+
+        <div class="card">
+            <h3>✈️ Ajuda na Lua de Mel</h3>
+            <span class="preco">R$ 500,00</span>
+            <button onclick="abrirPix('Cota Lua de Mel', 'R$ 500,00', 'COLE_AQUI_O_CODIGO_PIX_500')">Presentear</button>
+        </div>
+    </div>
+
+    <div id="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharModal()">&times;</span>
+            <h2 id="modal-titulo">Presente</h2>
+            <p>Escaneie o QR Code ou copie a chave abaixo:</p>
+            <div id="qrcode-placeholder">
+                <img id="qr-img" src="" alt="QR Code Pix" style="width: 200px;">
+            </div>
+            <input type="text" id="pix-copia-cola" readonly onclick="this.select()">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Clique no código para selecionar e copiar</p>
+        </div>
+    </div>
+
+    <script>
+        function abrirPix(nome, valor, codigo) {
+            document.getElementById('modal-titulo').innerText = nome + " (" + valor + ")";
+            document.getElementById('pix-copia-cola').value = codigo;
+            
+            // Opcional: Usar uma API gratuita para gerar a imagem do QR Code na hora
+            let qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(codigo);
+            document.getElementById('qr-img').src = qrUrl;
+            
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
